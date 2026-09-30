@@ -1,0 +1,146 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    color: #222;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background: #222;
+    color: white;
+  }
+  
+  header h1 {
+    margin: 0;
+  }
+  
+  button {
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #2563eb;
+    color: white;
+  }
+  
+  button:hover {
+    background: #1d4ed8;
+  }
+  
+  #library {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+  }
+  
+  .book-card {
+    padding: 1.5rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+  }
+  
+  .book-card h2 {
+    margin-top: 0;
+  }
+  
+  .book-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .remove-btn {
+    background: #dc2626;
+  }
+  
+  .remove-btn:hover {
+    background: #b91c1c;
+  }
+  
+  dialog {
+    border: none;
+    border-radius: 10px;
+    padding: 2rem;
+    width: min(90%, 400px);
+    box-shadow: 0 10px 30px rgb(0 0 0 / 30%);
+  }
+  
+  dialog::backdrop {
+    background: rgb(0 0 0 / 50%);
+  }
+  
+  #book-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  #book-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  
+  #book-form input[type="text"],
+  #book-form input[type="number"] {
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  #book-form label:has(input[type="checkbox"]) {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .form-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  #cancel-btn {
+    background: #6b7280;
+  }
+
+  /*
+
+  How the implementation satisfies the requirements
+
+    myLibrary contains only the book objects/data.
+
+    Book is the constructor for creating books.
+
+    Every book receives a stable unique ID through crypto.randomUUID().
+
+    addBookToLibrary() is separate from the constructor and handles adding books to the array.
+
+    displayBooks() handles DOM rendering, keeping presentation separate from the data.
+
+    Each card gets data-book-id, connecting the DOM element to its corresponding object.
+
+    event.preventDefault() prevents the form from attempting a normal server submission.
+
+    Removing a book removes it from myLibrary, then re-renders the display.
+
+    Book.prototype.toggleRead() changes an individual book's read property.
+
+    The read-status button calls that prototype method and then re-renders the library.
+
+    Event delegation on #library means you don't need to attach separate listeners to every newly created button.
+
+The important architectural pattern here is:
+
+User action → modify myLibrary → call displayBooks() → DOM reflects the data.
+
+That keeps the array as the source of truth rather than letting the DOM become the source of truth.
+  */
